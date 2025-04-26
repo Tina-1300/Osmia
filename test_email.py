@@ -1,25 +1,3 @@
-# Osmia
-An ultra-simple and SOLID Python library for sending emails with attachments and HTML or plain text support.
-
----
-
-## ✨ Features
-- Send emails with plain text or HTML
-- Easily add multiple attachments
-- SOLID-compliant architecture
-- Simple and clean interface
-
----
-
-## 🚀 Installation
-
-```bash
-git clone https://github.com/Tina-1300/Osmia.git
-```
-
-example usage of library :
-
-```python
 from Osmia.email_message import EmailMessage
 from Osmia.email_config import EmailConfig
 
@@ -59,4 +37,4 @@ response = email.send_email(
     type_email=str(format_mail[1]), # html => pour envoyer sous format html, plain => sous format text
     list_files=["random.hpp", "libcurl-x64.dll"] # 1 ou plusieur fichier cela fonctionne
 )
-```
+
