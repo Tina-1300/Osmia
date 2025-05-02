@@ -1,0 +1,5 @@
+# Ignorer le fichier .env dans le repertoire tests/
+tests/.env
+
+# Ignorer tous les fichiers .env dans n'importe quel repertoire
+*.env

@@ -1,5 +1,13 @@
 import sys
 import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Charge les variables du fichier .env
+
+email_sender = os.getenv('EMAIL_SENDER')  # récupère l'email d'envoyeur
+email_dest = email_sender # email du destinatere
+email_password = os.getenv('EMAIL_PASSWORD')  # récupère le mot de passe d'application
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -16,8 +24,8 @@ from Osmia.email_config import EmailConfig
 config = EmailConfig(
     smtp_server="smtp.gmail.com", # server smtp
     smtp_port=587, # port smtp
-    login="email_envoyeur@gmail.com", # email de l'envoyeur 
-    password="mot de passe d'application" # password d'application
+    login=email_sender, # email de l'envoyeur 
+    password=email_password # password d'application
 )
 
 # Création du mail
@@ -43,7 +51,7 @@ format_mail = ["plain", "html"]
 
 # envoie le même email à tout les email de la list to_email
 responses = email.send_email(
-    to_email=["destinatere@gmail.com", "destinatere2@gmail.com", "destinatere3@gmail.com"], # email du destinataire ou faire une list d'email de destinataire
+    to_email=[email_dest, email_dest, email_dest], # email du destinataire ou faire une list d'email de destinataire
     subject="Test Email",
     message=html_message, 
     type_email=str(format_mail[1]), # html => pour envoyer sous format html, plain => sous format text
@@ -52,7 +60,7 @@ responses = email.send_email(
 
 # peut garder cette syntax 
 response = email.send_email(
-    to_email="destinatere@gmail.com", # email du destinataire ou faire une list d'email de destinataire
+    to_email=email_dest, # email du destinataire ou faire une list d'email de destinataire
     subject="Test Email",
     message=html_message, 
     type_email=str(format_mail[1]), # html => pour envoyer sous format html, plain => sous format text
