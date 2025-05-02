@@ -1,4 +1,4 @@
-# email_lib/__init__.py
+# osmia/__init__.py
 
 from .base_email import BaseEmail
 from .email_message import EmailMessage

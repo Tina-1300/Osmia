@@ -22,7 +22,20 @@ class EmailMessage:
         return msg
 
     def send_email(self, to_email, subject, message, type_email="plain", list_files=[]):
-        msg = self.create_message(to_email, subject, message, type_email)
-        if list_files:
-            msg = self.add_attachments(msg, list_files)
-        return self.base_email.send(to_email, msg)
+        if isinstance(to_email, str):
+            msg = self.create_message(to_email, subject, message, type_email)
+            if list_files:
+                msg = self.add_attachments(msg, list_files)
+            return self.base_email.send(to_email, msg)
+        
+        elif isinstance(to_email, list):
+            results = []
+            for email in to_email:
+                msg = self.create_message(email, subject, message, type_email)
+                if list_files:
+                    msg = self.add_attachments(msg, list_files)
+                result = self.base_email.send(email, msg)
+                results.append((email, result))
+            return results
+        else:
+            return False
