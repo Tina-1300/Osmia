@@ -14,6 +14,5 @@ class BaseEmail:
                 server.starttls()
                 server.login(self.login, self.password)
                 server.sendmail(self.login, to_email, msg.as_string())
-            return "200"
         except Exception as e:
             return f"Erreur lors de l'envoi de l'email : {e}"

@@ -1,3 +1,4 @@
+import os
 import mimetypes
 from email.mime.base import MIMEBase
 from email import encoders
@@ -7,6 +8,9 @@ class EmailAttachment:
         self.file_path = file_path
 
     def attach_file(self, msg):
+        if not os.path.isfile(self.file_path):
+            raise FileNotFoundError(f"The file '{self.file_path}' does not exist.")
+
         mimetype, _ = mimetypes.guess_type(self.file_path)
         if mimetype is None:
             raise ValueError("Error MimTypes not found")
@@ -17,5 +21,6 @@ class EmailAttachment:
             part.set_payload(attachment.read())
 
         encoders.encode_base64(part)
-        part.add_header("Content-Disposition", f"attachment; filename={self.file_path}")
+        filename = os.path.basename(self.file_path)  # To avoid sending the full path
+        part.add_header("Content-Disposition", f"attachment; filename={filename}")
         msg.attach(part)

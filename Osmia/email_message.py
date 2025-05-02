@@ -17,11 +17,17 @@ class EmailMessage:
 
     def add_attachments(self, msg, list_files):
         for file in list_files:
-            attachment = EmailAttachment(file)
-            attachment.attach_file(msg)
+            try:
+                attachment = EmailAttachment(file)
+                attachment.attach_file(msg)
+            except Exception as e:
+                print(f"Error adding file {file} : {e}")
         return msg
 
-    def send_email(self, to_email, subject, message, type_email="plain", list_files=[]):
+    def send_email(self, to_email, subject, message, type_email="plain", list_files=None):
+        if list_files is None:
+            list_files = []
+        
         if isinstance(to_email, str):
             msg = self.create_message(to_email, subject, message, type_email)
             if list_files:
@@ -29,6 +35,9 @@ class EmailMessage:
             return self.base_email.send(to_email, msg)
         
         elif isinstance(to_email, list):
+            if not all(isinstance(email, str) for email in to_email):
+                raise TypeError("to_email must be a list of strings (list[str])")
+
             results = []
             for email in to_email:
                 msg = self.create_message(email, subject, message, type_email)
@@ -38,4 +47,4 @@ class EmailMessage:
                 results.append((email, result))
             return results
         else:
-            return False
+            raise TypeError("to_email must be either a string (str) or a list of strings (list[str])")
