@@ -2,6 +2,8 @@ import os
 import mimetypes
 from email.mime.base import MIMEBase
 from email import encoders
+from .smtp_service_config import * 
+
 
 class EmailAttachment:
     def __init__(self, file_path):

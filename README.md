@@ -1,4 +1,5 @@
 # Osmia
+
 An ultra-simple and SOLID Python library for sending emails with attachments and HTML or plain text support.
 
 ---
@@ -9,6 +10,8 @@ An ultra-simple and SOLID Python library for sending emails with attachments and
 - SOLID-compliant architecture
 - Simple and clean interface
 - sending email to a recipient email list
+- adding different SMTP services : Gmail, Orange, SFR, Yahoo, Outlook
+
 
 ---
 
@@ -27,13 +30,17 @@ example usage of library :
 ```python
 from Osmia.email_message import EmailMessage
 from Osmia.email_config import EmailConfig
+from Osmia.smtp_service_config import Gmail
+
+# configuration class of its SMTP provider
+gmail = Gmail()
 
 # Email Configuration
 config = EmailConfig(
-    smtp_server="smtp.gmail.com", # SMTP server
-    smtp_port=587, # SMTP port
+    smtp_server=gmail.server, # SMTP server
+    smtp_port=gmail.port, # SMTP port
     login="email@gmail.com", # sender's email
-    password="mot de passe d'application" # application password
+    password="application password" # application password
 )
 
 # Creation of the email
@@ -57,7 +64,7 @@ text_message = "Ceci est un test."
 
 format_mail = ["plain", "html"]
 
-files_listes = ["random.hpp", "libcurl-x64.dll"]
+files_listes = ["random.hpp", "libcurl-x64.dll", "nasmdoc.pdf"]
 
 
 # sends the same email to all emails in the to_email list
@@ -66,7 +73,8 @@ responses = email.send_email(
     subject="Test Email html format",
     message=html_message, 
     type_email=str(format_mail[1]), # html => to send in html format, plain => in text format
-    list_files=files_listes # 1 or more files it works
+    list_files=files_listes, # 1 or more files it works
+    email_service=gmail # your SMTP service
 )
 
 # we can keep this syntax
@@ -75,7 +83,8 @@ response = email.send_email(
     subject="Test Email text format",
     message=text_message, 
     type_email=str(format_mail[0]), # html => to send in html format, plain => in text format
-    list_files=files_listes # 1 or more files it works
+    list_files=files_listes, # 1 or more files it works
+    email_service=gmail # your SMTP service
 )
 
 # Please note that sending large files does not work.

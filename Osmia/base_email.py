@@ -15,4 +15,4 @@ class BaseEmail:
                 server.login(self.login, self.password)
                 server.sendmail(self.login, to_email, msg.as_string())
         except Exception as e:
-            return f"Erreur lors de l'envoi de l'email : {e}"
+            return f"Error sending email : {e}"
