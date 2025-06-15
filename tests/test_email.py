@@ -7,6 +7,8 @@ load_dotenv()  # load content in file .env
 email_sender = os.getenv('EMAIL_SENDER')  # get sender email
 email_dest = os.getenv('EMAIL_DEST') # get email dest
 email_password = os.getenv('EMAIL_PASSWORD')  # get application password
+email_cc = os.getenv('cc') # destinataire de copie
+email_bcc = os.getenv('cc') # destinataire de copie
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -61,7 +63,9 @@ responses = email.send_email(
     message=html_message, 
     type_email=str(format_mail[1]), # html => pour envoyer sous format html, plain => sous format text
     list_files=[list_files[0], list_files[2]], # 1 ou plusieur fichier cela fonctionne 
-    email_service=gmail # votre service smtp
+    email_service=gmail, # votre service smtp
+    cc=email_cc # email destinataire copie
+    #bcc=email_bcc # email destinataire copi caché
 )
 
 

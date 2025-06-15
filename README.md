@@ -11,6 +11,7 @@ An ultra-simple and SOLID Python library for sending emails with attachments and
 - Simple and clean interface
 - sending email to a recipient email list
 - adding different SMTP services : Gmail, Orange, SFR, Yahoo, Outlook
+- adding cc and cci (bcc) 
 
 
 ---
@@ -74,7 +75,9 @@ responses = email.send_email(
     message=html_message, 
     type_email=str(format_mail[1]), # html => to send in html format, plain => in text format
     list_files=files_listes, # 1 or more files it works
-    email_service=gmail # your SMTP service
+    email_service=gmail, # your SMTP service
+    bcc="tiers@gmail.com"
+    #cc="tierse@gmail.com"
 )
 
 # we can keep this syntax
